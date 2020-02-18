@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Visitador.Order;
+import Visitador.OverseasOrder;
 
 public class PanelOverseas implements PanelBuilder{
 	private JPanel pnlOverseasOrder;
@@ -25,12 +26,12 @@ public class PanelOverseas implements PanelBuilder{
 		this.pnlOverseasOrder.add(lblSH);
 		
 		txtAmount = new JTextField();
-		txtAmount.setBounds(293, 14, 273, 19);
+		txtAmount.setBounds(200, 14, 250, 19);
 		this.pnlOverseasOrder.add(txtAmount);
 		txtAmount.setColumns(10);
 		
 		txtSH = new JTextField();
-		txtSH.setBounds(293, 49, 273, 19);
+		txtSH.setBounds(200, 49, 250, 19);
 		this.pnlOverseasOrder.add(txtSH);
 		txtSH.setColumns(10);
 	}
@@ -50,8 +51,12 @@ public class PanelOverseas implements PanelBuilder{
 
 	@Override
 	public Order getOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		double amount = new Double(this.txtAmount.getText()).doubleValue();
+		double sh = new Double(this.txtSH.getText()).doubleValue();
+		if (amount >= 0 && sh >= 0 ) {
+			return new OverseasOrder(amount, sh);
+		}
+		throw new IllegalArgumentException();
 	}
 
 }

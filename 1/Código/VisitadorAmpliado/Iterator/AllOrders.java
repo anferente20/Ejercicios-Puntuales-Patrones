@@ -8,7 +8,7 @@ public class AllOrders {
 	private Vector data;
 	
 	public AllOrders() {
-		
+		data = new Vector();
 	}
 	
 	public Enumeration getAllOrders() {
@@ -17,5 +17,7 @@ public class AllOrders {
 	public Iterator getAdministratorOrders(String key) {
 		return new AdministratorOrders(this);
 	}
-	
+	public void add(Object obj) {
+		this.data.addElement(obj);
+	}
 }
