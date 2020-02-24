@@ -240,23 +240,7 @@ class ButtonHandler implements ActionListener {
     	manager.getBtnGetTotal().setEnabled(true);
     }
   }
-/**
-  public Order createOrder(String orderType,
-      double orderAmount, double tax, double SH) {
-    if (orderType.equalsIgnoreCase(OrderManager.CA_ORDER)) {
-      return new CaliforniaOrder(orderAmount, tax);
-    }
-    if (orderType.equalsIgnoreCase(
-      OrderManager.NON_CA_ORDER)) {
-      return new NonCaliforniaOrder(orderAmount);
-    }
-    if (orderType.equalsIgnoreCase(
-          OrderManager.OVERSEAS_ORDER)) {
-      return new OverseasOrder(orderAmount, SH);
-    }
-    return null;
-  }
-**/
+
   public ButtonHandler() {
   }
   public ButtonHandler(OrderManager inObjOrderManager) {
