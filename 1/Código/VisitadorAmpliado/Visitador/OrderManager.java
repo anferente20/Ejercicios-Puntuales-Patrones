@@ -31,13 +31,15 @@ public class OrderManager extends JFrame {
   private JLabel lblTotal, lblTotalValue;
   private JTable tblOrders;
   private JButton btnSaveChange;
+  private JButton btnGetTotal;
+  private JButton btnCreateOrder;
 
   public OrderManager() {
 	  super("Ordenes de envio");
 		
 		JButton btnExit = new JButton(OrderManager.EXIT);
-		JButton btnGetTotal = new JButton(OrderManager.GET_TOTAL);
-		JButton btnCreateOrder = new JButton(OrderManager.CREATE_ORDER);
+		btnGetTotal = new JButton(OrderManager.GET_TOTAL);
+		btnCreateOrder = new JButton(OrderManager.CREATE_ORDER);
 		JButton btnModifyOrder = new JButton(OrderManager.MODIFY_ORDER); 
 		btnSaveChange = new JButton(OrderManager.SAVE_CHANGE);
 
@@ -123,6 +125,12 @@ public class OrderManager extends JFrame {
   public JButton getBtnSaveChanges() {
 	  return this.btnSaveChange;
   }
+  public JButton getBtnCreateOrder() {
+	  return this.btnCreateOrder;
+  }
+  public JButton getBtnGetTotal() {
+	  return this.btnGetTotal;
+  }
   public void displayNewUI(JPanel panel) {
 		this.pnlOrder.removeAll();
 		this.pnlOrder.add(panel);
@@ -175,7 +183,8 @@ class ButtonHandler implements ActionListener {
     if(e.getActionCommand().equals(OrderManager.MODIFY_ORDER)) { 
     	manager.getBtnSaveChanges().setEnabled(true);
     	manager.getCmbOrderType().setEnabled(false);
-    	
+    	manager.getBtnCreateOrder().setEnabled(false);
+    	manager.getBtnGetTotal().setEnabled(false);
     	
     	id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la"
     			+ " orden que desea modificar"));
@@ -217,6 +226,8 @@ class ButtonHandler implements ActionListener {
 		this.manager.setDataTable(visitor.getTableModel());
 		this.manager.getBtnSaveChanges().setEnabled(false);
 		manager.getCmbOrderType().setEnabled(true);
+		manager.getBtnCreateOrder().setEnabled(true);
+    	manager.getBtnGetTotal().setEnabled(true);
     }
   }
 /**
