@@ -139,9 +139,9 @@ class ButtonHandler implements ActionListener {
 	private OrderManager manager;
 	private AllOrders allOrders;
 	private PanelBuilder panel;
-	private int id ;
+	private int id =1;
+	int srchID;
   public void actionPerformed(ActionEvent e) {
-
     if (e.getActionCommand().equals(OrderManager.EXIT)) {
       System.exit(1);
     }
@@ -151,12 +151,14 @@ class ButtonHandler implements ActionListener {
     	
     	Order order = this.panel.getOrder();
     	System.out.println(order.getClass().getName());
+    	order.setID(id);
     	allOrders.add(order);
     	VisitorTable visitor = new VisitorTable();
 		this.allOrders.accept(visitor);
 		this.manager.setDataTable(visitor.getTableModel());
       manager.setTotalValue(
         " Order Created Successfully");
+      	id++;
     }
 
     if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
@@ -173,14 +175,15 @@ class ButtonHandler implements ActionListener {
 		this.manager.displayNewUI(this.panel.getPanel());
 	}
     if(e.getActionCommand().equals(OrderManager.MODIFY_ORDER)) { 
+    	
     	manager.getBtnSaveChanges().setEnabled(true);
     	manager.getCmbOrderType().setEnabled(false);
     	
-    	id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la"
+    	srchID = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la"
     			+ " orden que desea modificar"));
-    	id--;
+    	srchID--;
     	
-    	Order order= allOrders.getElement(id);
+    	Order order= allOrders.getElement(srchID);
     	
     	String type = order.getClass().getName();
     	type = type.substring(10);
@@ -205,7 +208,7 @@ class ButtonHandler implements ActionListener {
     if(e.getActionCommand().equals(OrderManager.SAVE_CHANGE)) {
     	Order order = this.panel.getOrder();
     	System.out.println(order.getClass().getName());
-    	allOrders.replace(this.id, order);
+    	allOrders.replace(srchID, order);
     	VisitorTable visitor = new VisitorTable();
 		this.allOrders.accept(visitor);
 		this.manager.setDataTable(visitor.getTableModel());

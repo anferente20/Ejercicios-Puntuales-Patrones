@@ -43,6 +43,12 @@ public class AllOrders implements Order {
 			order.accept(v);
 		}
 	}
+
+	@Override
+	public void setID(int ID) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
