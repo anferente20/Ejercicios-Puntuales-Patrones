@@ -184,25 +184,19 @@ class ButtonHandler implements ActionListener {
 	}
     if(e.getActionCommand().equals(OrderManager.MODIFY_ORDER)) { 
     	
-    	manager.getBtnSaveChanges().setEnabled(true);
-    	manager.getCmbOrderType().setEnabled(false);
-    	manager.getBtnCreateOrder().setEnabled(false);
-    	manager.getBtnGetTotal().setEnabled(false);
+    	
     	
     	srchID = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la"
     			+ " orden que desea modificar"));
-<<<<<<< HEAD
+
     	srchID--;
     	
-    	Order order= allOrders.getElement(srchID);
     	
-    	String type = order.getClass().getName();
-    	type = type.substring(10);
-=======
-    	id--;
+
     	try {
-    		Order order= allOrders.getElement(id);
-    		String type = order.getClass().getName();
+    		Order order= allOrders.getElement(srchID);
+        	
+        	String type = order.getClass().getName();
         	type = type.substring(10);
         	
         	if(type.equals("CaliforniaOrder")) {
@@ -221,11 +215,15 @@ class ButtonHandler implements ActionListener {
     		PanelDirector director = new PanelDirector(this.panel);
     		director.build();
     		this.manager.displayNewUI(this.panel.getPanel());
+    		manager.getBtnSaveChanges().setEnabled(true);
+        	manager.getCmbOrderType().setEnabled(false);
+        	manager.getBtnCreateOrder().setEnabled(false);
+        	manager.getBtnGetTotal().setEnabled(false);
     	}catch(ArrayIndexOutOfBoundsException ex) {
     		JOptionPane.showMessageDialog(null, "El ID ingresado no corresponde a ninguna orden registrada.");
     	};
     	
->>>>>>> c211f17b89258afcca78d23a85132766e30cc7af
+
     	
     					
     }
