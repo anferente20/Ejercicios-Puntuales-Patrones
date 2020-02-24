@@ -176,31 +176,37 @@ class ButtonHandler implements ActionListener {
     	manager.getBtnSaveChanges().setEnabled(true);
     	manager.getCmbOrderType().setEnabled(false);
     	
+    	
     	id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la"
     			+ " orden que desea modificar"));
     	id--;
+    	try {
+    		Order order= allOrders.getElement(id);
+    		String type = order.getClass().getName();
+        	type = type.substring(10);
+        	
+        	if(type.equals("CaliforniaOrder")) {
+        		this.panel = BuilderFactory.getPanel(BuilderFactory.CA_ORDER);
+        	}
+    		if(type.equals("NonCaliforniaOrder")) {
+    			this.panel = BuilderFactory.getPanel(BuilderFactory.NON_CA_ORDER);		
+    		}
+    		if(type.equals("OverseasOrder")) {
+    			this.panel = BuilderFactory.getPanel(BuilderFactory.OVERSEAS_ORDER);
+    		}
+    		if(type.equals("ColombianOrder")) {			
+    			this.panel = BuilderFactory.getPanel(BuilderFactory.COLOMBIAN_ORDER);		
+    		}
+    		
+    		PanelDirector director = new PanelDirector(this.panel);
+    		director.build();
+    		this.manager.displayNewUI(this.panel.getPanel());
+    	}catch(ArrayIndexOutOfBoundsException ex) {
+    		JOptionPane.showMessageDialog(null, "El ID ingresado no corresponde a ninguna orden registrada.");
+    	};
     	
-    	Order order= allOrders.getElement(id);
     	
-    	String type = order.getClass().getName();
-    	type = type.substring(10);
-    	
-    	if(type.equals("CaliforniaOrder")) {
-    		this.panel = BuilderFactory.getPanel(BuilderFactory.CA_ORDER);
-    	}
-		if(type.equals("NonCaliforniaOrder")) {
-			this.panel = BuilderFactory.getPanel(BuilderFactory.NON_CA_ORDER);		
-		}
-		if(type.equals("OverseasOrder")) {
-			this.panel = BuilderFactory.getPanel(BuilderFactory.OVERSEAS_ORDER);
-		}
-		if(type.equals("ColombianOrder")) {			
-			this.panel = BuilderFactory.getPanel(BuilderFactory.COLOMBIAN_ORDER);		
-		}
-		
-		PanelDirector director = new PanelDirector(this.panel);
-		director.build();
-		this.manager.displayNewUI(this.panel.getPanel());				
+    					
     }
     if(e.getActionCommand().equals(OrderManager.SAVE_CHANGE)) {
     	Order order = this.panel.getOrder();
