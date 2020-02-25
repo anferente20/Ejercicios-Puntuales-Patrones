@@ -158,7 +158,7 @@ class ButtonHandler implements ActionListener {
       //get input values
     	
     	Order order = this.panel.getOrder();
-    	System.out.println(order.getClass().getName());
+
     	order.setID(id);
     	allOrders.add(order);
     	VisitorTable visitor = new VisitorTable();
@@ -229,7 +229,6 @@ class ButtonHandler implements ActionListener {
     }
     if(e.getActionCommand().equals(OrderManager.SAVE_CHANGE)) {
     	Order order = this.panel.getOrder();
-    	System.out.println(order.getClass().getName());
     	allOrders.replace(srchID, order);
     	VisitorTable visitor = new VisitorTable();
 		this.allOrders.accept(visitor);
