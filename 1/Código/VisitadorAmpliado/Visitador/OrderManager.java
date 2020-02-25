@@ -149,6 +149,7 @@ class ButtonHandler implements ActionListener {
 	private PanelBuilder panel;
 	private int id =1;
 	int srchID;
+	private String changeType;
   public void actionPerformed(ActionEvent e) {
     if (e.getActionCommand().equals(OrderManager.EXIT)) {
       System.exit(1);
@@ -185,7 +186,7 @@ class ButtonHandler implements ActionListener {
 	}
     if(e.getActionCommand().equals(OrderManager.MODIFY_ORDER)) { 
     	
-    	
+    	changeType = "";
     	
     	srchID = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la"
     			+ " orden que desea modificar"));
@@ -201,17 +202,18 @@ class ButtonHandler implements ActionListener {
         	type = type.substring(10);
         	
         	if(type.equals("CaliforniaOrder")) {
-        		this.panel = BuilderFactory.getPanel(BuilderFactory.CA_ORDER);
+        		changeType = BuilderFactory.CA_ORDER;
         	}
     		if(type.equals("NonCaliforniaOrder")) {
-    			this.panel = BuilderFactory.getPanel(BuilderFactory.NON_CA_ORDER);		
+    			changeType = BuilderFactory.NON_CA_ORDER;		
     		}
     		if(type.equals("OverseasOrder")) {
-    			this.panel = BuilderFactory.getPanel(BuilderFactory.OVERSEAS_ORDER);
+    			changeType = BuilderFactory.OVERSEAS_ORDER;
     		}
     		if(type.equals("ColombianOrder")) {			
-    			this.panel = BuilderFactory.getPanel(BuilderFactory.COLOMBIAN_ORDER);		
+    			changeType = BuilderFactory.COLOMBIAN_ORDER;		
     		}
+    		this.panel = BuilderFactory.getPanel(changeType);
     		
     		PanelDirector director = new PanelDirector(this.panel);
     		director.build();
