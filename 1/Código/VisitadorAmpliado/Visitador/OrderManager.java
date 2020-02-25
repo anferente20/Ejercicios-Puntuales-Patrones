@@ -175,6 +175,7 @@ class ButtonHandler implements ActionListener {
       allOrders.accept(visitor);
       manager.setTotalValue(String.valueOf(visitor.getOrderTotal()));
     }
+    
     if (e.getSource() == manager.getCmbOrderType()) {
 		String orderType = manager.getOrderType();
 		this.panel = BuilderFactory.getPanel(orderType);
