@@ -148,7 +148,7 @@ class ButtonHandler implements ActionListener {
 	private AllOrders allOrders;
 	private PanelBuilder panel;
 	private int id =1;
-	int srchID;
+	
 	private String changeType;
   public void actionPerformed(ActionEvent e) {
     if (e.getActionCommand().equals(OrderManager.EXIT)) {
@@ -158,6 +158,9 @@ class ButtonHandler implements ActionListener {
         ) {
       //get input values
     	
+    	
+    	id = allOrders.getTamano()+1;
+    	
     	Order order = this.panel.getOrder();
 
     	order.setID(id);
@@ -165,7 +168,7 @@ class ButtonHandler implements ActionListener {
     	VisitorTable visitor = new VisitorTable();
 		this.allOrders.accept(visitor);
 		this.manager.setDataTable(visitor.getTableModel());
-      manager.setTotalValue(
+		manager.setTotalValue(
         " Order Created Successfully");
       	id++;
     }
@@ -188,51 +191,50 @@ class ButtonHandler implements ActionListener {
     	
     	changeType = "";
     	
-    	srchID = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la"
+    	try {
+    	id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la"
     			+ " orden que desea modificar"));
 
-    	srchID--;
+    	id--;
     	
-    	
-
-    	try {
-    		Order order= allOrders.getElement(srchID);
-        	
-        	String type = order.getClass().getName();
-        	type = type.substring(10);
-        	
-        	if(type.equals("CaliforniaOrder")) {
-        		changeType = BuilderFactory.CA_ORDER;
-        	}
-    		if(type.equals("NonCaliforniaOrder")) {
-    			changeType = BuilderFactory.NON_CA_ORDER;		
-    		}
-    		if(type.equals("OverseasOrder")) {
-    			changeType = BuilderFactory.OVERSEAS_ORDER;
-    		}
-    		if(type.equals("ColombianOrder")) {			
-    			changeType = BuilderFactory.COLOMBIAN_ORDER;		
-    		}
-    		this.panel = BuilderFactory.getPanel(changeType);
-    		
-    		PanelDirector director = new PanelDirector(this.panel);
-    		director.build();
-    		this.manager.displayNewUI(this.panel.getPanel());
-    		manager.getBtnSaveChanges().setEnabled(true);
-        	manager.getCmbOrderType().setEnabled(false);
-        	manager.getBtnCreateOrder().setEnabled(false);
-        	manager.getBtnGetTotal().setEnabled(false);
-    	}catch(ArrayIndexOutOfBoundsException ex) {
-    		JOptionPane.showMessageDialog(null, "El ID ingresado no corresponde a ninguna orden registrada.");
-    	};
-    	
-
-    	
+	    	try {
+	    		Order order= allOrders.getElement(id);	    		
+	        	String type = order.getClass().getName();
+	        	type = type.substring(10);
+	        	
+	        	if(type.equals("CaliforniaOrder")) {
+	        		changeType = BuilderFactory.CA_ORDER;
+	        	}
+	    		if(type.equals("NonCaliforniaOrder")) {
+	    			changeType = BuilderFactory.NON_CA_ORDER;		
+	    		}
+	    		if(type.equals("OverseasOrder")) {
+	    			changeType = BuilderFactory.OVERSEAS_ORDER;
+	    		}
+	    		if(type.equals("ColombianOrder")) {			
+	    			changeType = BuilderFactory.COLOMBIAN_ORDER;		
+	    		}
+	    		this.panel = BuilderFactory.getPanel(changeType);
+	    		
+	    		PanelDirector director = new PanelDirector(this.panel);
+	    		director.build();
+	    		this.manager.displayNewUI(this.panel.getPanel());
+	    		manager.getBtnSaveChanges().setEnabled(true);
+	        	manager.getCmbOrderType().setEnabled(false);
+	        	manager.getBtnCreateOrder().setEnabled(false);
+	        	manager.getBtnGetTotal().setEnabled(false);
+	    	}catch(ArrayIndexOutOfBoundsException ex) {
+	    		JOptionPane.showMessageDialog(null, "El ID ingresado no corresponde a ninguna orden registrada.");
+	    	};
+    	}catch(NumberFormatException nf) {
+    		JOptionPane.showMessageDialog(null, "El ID ingresado no es numérico");
+    	}    	    	    
     					
     }
     if(e.getActionCommand().equals(OrderManager.SAVE_CHANGE)) {
     	Order order = this.panel.getOrder();
-    	allOrders.replace(srchID, order);
+    	order.setID(id+1);
+    	allOrders.replace(id, order);
     	VisitorTable visitor = new VisitorTable();
 		this.allOrders.accept(visitor);
 		this.manager.setDataTable(visitor.getTableModel());
